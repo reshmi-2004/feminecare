@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutritional Food Suggestions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        .suggestion {
+            margin-top: 20px;
+        }
+        .food-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .food-list li {
+            padding: 10px;
+            background-color: white;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .btn {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Nutritional Food Suggestions</h1>
+
+    <label for="category">Choose a nutritional category:</label>
+    <select id="category" onchange="generateSuggestions()">
+        <option value="">Select Category</option>
+        <option value="highProtein">High Protein</option>
+        <option value="lowCalorie">Low Calorie</option>
+        <option value="fiberRich">Fiber Rich</option>
+        <option value="vitaminRich">Vitamin Rich</option>
+    </select>
+
+    <div class="suggestion" id="foodSuggestions">
+        
+    </div>
+
+    <script>
+        function generateSuggestions() {
+            const category = document.getElementById('category').value;
+            const suggestionsContainer = document.getElementById('foodSuggestions');
+            suggestionsContainer.innerHTML = ''; // Clear previous suggestions
+
+            let foodList = [];
+
+            if (category === 'highProtein') {
+                foodList = [
+                    { food: 'Chicken Breast', protein: '31g', calories: '165 kcal' },
+                    { food: 'Tofu', protein: '8g', calories: '70 kcal' },
+                    { food: 'Eggs', protein: '6g', calories: '68 kcal' }
+                ];
+            } else if (category === 'lowCalorie') {
+                foodList = [
+                    { food: 'Cucumber', protein: '1g', calories: '16 kcal' },
+                    { food: 'Spinach', protein: '3g', calories: '23 kcal' },
+                    { food: 'Zucchini', protein: '1g', calories: '17 kcal' }
+                ];
+            } else if (category === 'fiberRich') {
+                foodList = [
+                    { food: 'Chia Seeds', fiber: '10g', calories: '137 kcal' },
+                    { food: 'Oats', fiber: '4g', calories: '68 kcal' },
+                    { food: 'Black Beans', fiber: '8g', calories: '114 kcal' }
+                ];
+            } else if (category === 'vitaminRich') {
+                foodList = [
+                    { food: 'Carrots', vitamin: 'Vitamin A (184% DV)', calories: '41 kcal' },
+                    { food: 'Kale', vitamin: 'Vitamin C (200% DV)', calories: '33 kcal' },
+                    { food: 'Bell Peppers', vitamin: 'Vitamin C (159% DV)', calories: '31 kcal' }
+                ];
+            }
+
+            if (foodList.length > 0) {
+                const ul = document.createElement('ul');
+                ul.classList.add('food-list');
+                
+                foodList.forEach(item => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<strong>${item.food}</strong><br> 
+                                    Protein: ${item.protein || 'N/A'} <br>
+                                    Calories: ${item.calories}<br>
+                                    ${item.fiber ? 'Fiber: ' + item.fiber : ''} 
+                                    ${item.vitamin ? ' - ' + item.vitamin : ''}`;
+                    ul.appendChild(li);
+                });
+
+                suggestionsContainer.appendChild(ul);
+            }
+        }
+    </script>
+
+</body>
+</html>

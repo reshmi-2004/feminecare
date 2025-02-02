@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Tracker</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-color: #ffe6f2; /* Light pink background */
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #ff4d94; /* Darker pink */
+            color: white;
+            padding: 15px;
+            font-size: 24px;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        nav {
+            background: #ff66a3;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 10px;
+            font-size: 16px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: 0.3s ease-in-out;
+        }
+        nav a:hover {
+            background: white;
+            color: #ff4d94;
+            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+            gap: 15px;
+        }
+        .section {
+            background: white;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 15px;
+            width: 220px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: 0.3s ease-in-out;
+            cursor: pointer;
+            position: relative;
+        }
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+        .section a {
+            text-decoration: none;
+            color: #ff4d94;
+            font-size: 18px;
+            font-weight: bold;
+            display: block;
+        }
+        .section i {
+            font-size: 30px;
+            color: #ff4d94;
+            margin-bottom: 10px;
+        }
+        footer {
+            background: #333;
+            color: white;
+            padding: 10px;
+            margin-top: 30px;
+            font-size: 14px;
+        }
+    </style>
+    <!-- FontAwesome for Icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <header>
+        Health & Wellness Tracker
+    </header>
+
+    <nav>
+        <a href="index.html"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+        <a href="period.html"><i class="fas fa-tint"></i> Period Tracker</a>
+        <a href="pregnancy.html"><i class="fas fa-baby"></i> Pregnancy Tracker</a>
+        <a href="mood.html"><i class="fas fa-smile"></i> Mood Tracker</a>
+        <a href="exercise.html"><i class="fas fa-dumbbell"></i> Exercises</a>
+        <a href="nutrition.html"><i class="fas fa-carrot"></i> Nutrition</a>
+    </nav>
+
+    <div class="container">
+        <div class="section">
+            <i class="fas fa-tint"></i>
+            <a href="file:///C:/xampp/htdocs/period_tracker/index.html">Period Tracker</a>
+        </div>
+        <div class="section">
+            <i class="fas fa-baby"></i>
+            <a href="file:///C:/xampp/htdocs/pregnancy_tracker/index.html">Pregnancy Tracker</a>
+        </div>
+        <div class="section">
+            <i class="fas fa-smile"></i>
+            <a href="file:///C:/xampp/htdocs/mood/index.html">Mood Tracker</a>
+        </div>
+        <div class="section">
+            <i class="fas fa-dumbbell"></i>
+            <a href="file:///C:/xampp/htdocs/exc/index.html">Exercises</a>
+        </div>
+        <div class="section">
+            <i class="fas fa-carrot"></i>
+            <a href="file:///C:/xampp/htdocs/nutrition/index.html">Nutrition</a>
+        </div>
+    </div>
+
+    <footer>
+        © 2025 FemCare | All Rights Reserved
+    </footer>
+
+</body>
+</html>

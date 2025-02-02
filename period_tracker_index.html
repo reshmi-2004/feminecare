@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Period Tracker</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            color: #333;
+        }
+
+        header {
+            background-color: #ff4d4d;
+            color: white;
+            padding: 20px;
+            font-size: 24px;
+            text-transform: uppercase;
+        }
+
+        .container {
+            width: 90%;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input, button {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background: #ff4d4d;
+            color: white;
+            cursor: pointer;
+            border: none;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #e04343;
+        }
+
+        h3 {
+            font-size: 20px;
+            color: #e04343;
+        }
+
+        footer {
+            background: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .result {
+            background: #ffe6e6;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .cycle, .history {
+            margin-top: 30px;
+            background-color: #ffe6e6;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .cycle h4, .history h4 {
+            color: #ff4d4d;
+            margin-bottom: 10px;
+        }
+
+        .cycle ul, .history ul {
+            text-align: left;
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .cycle li, .history li {
+            margin-bottom: 10px;
+        }
+
+        .cycle-bar {
+            height: 20px;
+            width: 100%;
+            background-color: #e6e6e6;
+            border-radius: 5px;
+            margin-top: 10px;
+            position: relative;
+        }
+
+        .cycle-phase {
+            height: 100%;
+            text-align: center;
+            color: white;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 5px;
+        }
+
+        .menstrual { background-color: #ff4d4d; }
+        .follicular { background-color: #ff6f61; }
+        .ovulation { background-color: #ffcc00; }
+        .luteal { background-color: #ffbf00; }
+    </style>
+</head>
+<body>
+
+    <header>
+        Period Tracker
+    </header>
+
+    <div class="container">
+        <h2>Track Your Period</h2>
+        <p>Enter your last period date and cycle length to predict your next period.</p>
+        <form>
+            <input type="date" id="lastPeriod" required>
+            <input type="number" id="cycleLength" placeholder="Cycle Length (days)" required>
+            <button type="button" onclick="calculateCycle()">Track Period</button>
+        </form>
+        <h3 id="result"></h3>
+    </div>
+
+    
+    <div class="cycle">
+        <h4>Menstrual Cycle Tracker</h4>
+        <p id="cycleInfo">Enter your period information to see your cycle phases.</p>
+        <div class="cycle-bar" id="cycleBar">
+            
+        </div>
+    </div>
+
+    
+    <div class="history">
+        <h4>Period History</h4>
+        <ul id="historyList">
+            
+        </ul>
+    </div>
+
+    <footer>
+        © 2025 Period Tracker | All rights reserved
+    </footer>
+
+    <script>
+        let periodHistory = [];
+
+        function calculateCycle() {
+            const lastPeriod = document.getElementById("lastPeriod").value;
+            const cycleLength = parseInt(document.getElementById("cycleLength").value);
+
+            if (!lastPeriod || isNaN(cycleLength) || cycleLength <= 0) {
+                alert("Please provide valid inputs.");
+                return;
+            }
+
+            const lastPeriodDate = new Date(lastPeriod);
+            const nextPeriodDate = new Date(lastPeriodDate);
+            nextPeriodDate.setDate(lastPeriodDate.getDate() + cycleLength);
+
+            const nextPeriod = nextPeriodDate.toDateString();
+            document.getElementById("result").innerHTML = `Your next period will be on: <strong>${nextPeriod}</strong>`;
+
+           
+            periodHistory.push({ date: lastPeriod, nextPeriod: nextPeriod });
+            displayHistory();
+
+            
+            const menstrualPhaseLength = 5; 
+            const follicularPhaseLength = cycleLength - menstrualPhaseLength - 14; 
+            const ovulationPhaseLength = 2; 
+            const lutealPhaseLength = cycleLength - (menstrualPhaseLength + follicularPhaseLength + ovulationPhaseLength); 
+
+            
+            const cycleBar = document.getElementById("cycleBar");
+            cycleBar.innerHTML = ''; 
+
+            const phases = [
+                { name: "Menstrual Phase", length: menstrualPhaseLength, class: "menstrual" },
+                { name: "Follicular Phase", length: follicularPhaseLength, class: "follicular" },
+                { name: "Ovulation", length: ovulationPhaseLength, class: "ovulation" },
+                { name: "Luteal Phase", length: lutealPhaseLength, class: "luteal" }
+            ];
+
+            let totalLength = 0;
+            phases.forEach(phase => {
+                const phaseDiv = document.createElement("div");
+                phaseDiv.className = `cycle-phase ${phase.class}`;
+                phaseDiv.style.width = `${(phase.length / cycleLength) * 100}%`;
+                phaseDiv.innerText = phase.name;
+                cycleBar.appendChild(phaseDiv);
+                totalLength += phase.length;
+            });
+        }
+
+
+        function displayHistory() {
+            const historyList = document.getElementById("historyList");
+            historyList.innerHTML = '';
+            periodHistory.forEach((entry) => {
+                const li = document.createElement("li");
+                li.innerHTML = `Last Period: ${entry.date}, Next Period: ${entry.nextPeriod}`;
+                historyList.appendChild(li);
+            });
+        }
+    </script>
+
+</body>
+</html>

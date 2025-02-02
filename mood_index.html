@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wellness Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #ffe6f2;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        header {
+            background-color: #ff4d94;
+            color: white;
+            padding: 15px;
+            font-size: 24px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .container {
+            background: white;
+            margin: 30px auto;
+            padding: 20px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h3 {
+            color: #ff4d94;
+        }
+
+        input, button {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background: #ff4d94;
+            color: white;
+            cursor: pointer;
+            border: none;
+            transition: 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background: #e04386;
+        }
+
+        .stress-level, .motivational-quote, .emotion-recognizer, .game-section {
+            background: #ffe6f2;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .stress-level select {
+            width: 85%;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        .quote-box {
+            font-size: 18px;
+            color: #ff4d94;
+            font-weight: bold;
+            padding: 10px;
+        }
+
+        .emotion-recognizer input {
+            width: 85%;
+            padding: 8px;
+            border: none;
+            background: white;
+        }
+
+        .bubble-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .bubble {
+            width: 40px;
+            height: 40px;
+            background-color: #ff66b2;
+            border-radius: 50%;
+            display: inline-block;
+            margin: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .bubble:hover {
+            transform: scale(1.2);
+            background-color: #ff3385;
+        }
+
+        
+        .breath-circle {
+            width: 100px;
+            height: 100px;
+            background-color: #ff99c2;
+            border-radius: 50%;
+            margin: 20px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            color: white;
+            font-weight: bold;
+            animation: breathAnimation 4s infinite alternate ease-in-out;
+        }
+
+        @keyframes breathAnimation {
+            0% { transform: scale(1); background-color: #ff99c2; }
+            100% { transform: scale(1.5); background-color: #ff4d94; }
+        }
+
+        
+        .relax-click {
+            background-image: url('https://source.unsplash.com/800x600/?nature,calm');
+            background-size: cover;
+            height: 200px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        footer {
+            background: #333;
+            color: white;
+            padding: 10px;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        Wellness Tracker - Stress Release Games
+    </header>
+
+    <div class="container">
+        
+        <div class="stress-level">
+            <h3>Track Your Stress Level</h3>
+            <select id="stressLevel">
+                <option value="1">😌 Very Low</option>
+                <option value="2">🙂 Low</option>
+                <option value="3">😐 Moderate</option>
+                <option value="4">😕 High</option>
+                <option value="5">😩 Very High</option>
+            </select>
+            <button onclick="saveStress()">Save Stress Level</button>
+        </div>
+
+        
+        <div class="emotion-recognizer">
+            <h3>Emotion Recognizer</h3>
+            <input type="file" id="emotionImage" accept="image/*">
+            <button onclick="recognizeEmotion()">Detect Emotion</button>
+            <p id="emotionResult">Upload an image to detect emotion.</p>
+        </div>
+
+        
+        <div class="motivational-quote">
+            <h3>Daily Motivation</h3>
+            <p class="quote-box" id="quote">Click to get a motivational quote!</p>
+            <button onclick="generateQuote()">Get Quote</button>
+        </div>
+
+        <div class="game-section">
+            <h3>Bubble Pop Game</h3>
+            <p>Click on the bubbles to pop them!</p>
+            <div class="bubble-container" id="bubbleContainer">
+               
+            </div>
+            <button onclick="generateBubbles()">Restart Bubbles</button>
+        </div>
+
+        
+        <div class="game-section">
+            <h3>Breathing Exercise</h3>
+            <p>Follow the circle: Inhale → Hold → Exhale</p>
+            <div class="breath-circle">Breathe</div>
+        </div>
+
+        
+        <div class="game-section relax-click" onclick="playRelaxSound()">
+            Click to Play Relaxing Sound
+        </div>
+    </div>
+
+    <footer>
+        © 2025 Wellness Tracker | All Rights Reserved
+    </footer>
+
+    <script>
+        let stressHistory = [];
+
+        function saveStress() {
+            const stressLevel = document.getElementById("stressLevel").value;
+            const today = new Date().toISOString().split('T')[0];
+            stressHistory.push({ date: today, stress: stressLevel });
+            alert("Stress Level Saved for " + today);
+        }
+
+        function recognizeEmotion() {
+            const fileInput = document.getElementById("emotionImage");
+            if (fileInput.files.length === 0) {
+                alert("Please upload an image.");
+                return;
+            }
+            const emotions = ["😊 Happy", "😞 Sad", "😠 Angry", "😲 Surprised", "😐 Neutral"];
+            document.getElementById("emotionResult").innerHTML = "Detected Emotion: " + emotions[Math.floor(Math.random() * emotions.length)];
+        }
+
+        function generateQuote() {
+            const quotes = [
+                "🌟 Believe in yourself and all that you are.",
+                "💖 Every day is a fresh start.",
+                "😊 Keep smiling, the best is yet to come.",
+                "🌿 Take a deep breath and relax.",
+                "💪 You are stronger than you think.",
+                "🌈 Positivity attracts good energy."
+            ];
+            document.getElementById("quote").innerHTML = quotes[Math.floor(Math.random() * quotes.length)];
+        }
+
+        function generateBubbles() {
+            let container = document.getElementById("bubbleContainer");
+            container.innerHTML = "";
+            for (let i = 0; i < 12; i++) {
+                let bubble = document.createElement("div");
+                bubble.classList.add("bubble");
+                bubble.onclick = () => bubble.remove();
+                container.appendChild(bubble);
+            }
+        }
+
+        function playRelaxSound() {
+            let audio = new Audio("https://www.soundjay.com/nature/sounds/rain-01.mp3");
+            audio.play();
+            alert("Relaxing nature sound playing...");
+        }
+
+        generateBubbles();
+    </script>
+
+</body>
+</html>
